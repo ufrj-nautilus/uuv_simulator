@@ -242,7 +242,7 @@ void PoseGTROSPlugin::PublishNEDOdomMessage(common::Time _time,
   ignition::math::Pose3d _pose, ignition::math::Vector3d _linVel,
   ignition::math::Vector3d _angVel)
 {
-  // Generates the odometry message of the robot's base_link_aa frame
+  // Generates the odometry message of the robot's base_link_ned frame
   // wrt generated NED inertial reference frame
   if (!this->publishNEDOdom)
     return;
