@@ -119,7 +119,6 @@ class ActuatorManager(object):
 
         if not self.find_actuators():
             raise rospy.ROSException('No thruster and/or fins found')
-        self.last_published_timestamp = rospy.Time(0)
 
     def find_actuators(self):
         """Calculate the control allocation matrix, if one is not given."""
@@ -206,11 +205,7 @@ class ActuatorManager(object):
         return actuator_model
 
     def publish_commands(self, command):
-        if self.last_published_timestamp != rospy.Time.now():
-            self.thruster.publish_command(command[0])
+        self.thruster.publish_command(command[0])
 
-            for i in range(self.n_fins):
-                if self.last_published_timestamp != rospy.Time.now():
-                    self.fins[i].publish_command(command[i + 1])
-                    self.last_published_timestamp = rospy.Time.now()
-        self.last_published_timestamp = rospy.Time.now()
+        for i in range(self.n_fins):
+            self.fins[i].publish_command(command[i + 1])
